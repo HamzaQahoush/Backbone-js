@@ -35,6 +35,7 @@ let Dog = Animal.extend({
 dog1 = new Dog();
 dog1.walk();
 
+// assignemnt 1
 let Vechicle = Backbone.Model.extend({
   idAttribute: "registrationNumber",
   validate: function (attrs) {
@@ -50,6 +51,7 @@ let Vechicle = Backbone.Model.extend({
 
 let Car = Vechicle.extend({
   start: function () {
+    console.log("this.attributes", this.attributes);
     console.log(
       `Car with this registrationNumber ${this.get(
         "registrationNumber"
@@ -73,3 +75,60 @@ if (!car1.isValid()) {
 }
 
 car1.start();
+
+// assignmnet 2 for collections
+let Vechicles = Backbone.Collection.extend({
+  model: Car,
+});
+
+let vechicles_collection = new Vechicles([
+  new Car({ registrationNumber: "XLI887", colour: "Blue" }),
+  new Car({ registrationNumber: "XLI87c", colour: "Blue" }),
+  new Car({ registrationNumber: "XLIc887", colour: "grey" }),
+]);
+
+const blueCars = vechicles_collection.filter(
+  (car) => car.get("colour") == "Blue"
+);
+const remove_reg = vechicles_collection.filter(
+  (car) => car.get("registrationNumber") == "XLI887"
+);
+vechicles_collection.remove(remove_reg);
+console.log("vechicles_collection", vechicles_collection);
+console.log("blueCars", blueCars);
+
+// Collections :
+let Song_model = Backbone.Model.extend();
+
+let Songs = Backbone.Collection.extend({
+  model: Song_model,
+});
+
+/* we can add model to collection by 
+- create an instance of collection and add instance of model
+as array OR by add method 
+ */
+let songs_collection = new Songs([
+  new Song_model({ title: "Song 1", genre: "jazz", download: 90 }),
+  new Song_model({ title: "Song 2", genre: "pop", download: 45 }),
+]);
+
+songs_collection.add(
+  new Song_model({ title: "song3", genre: "pop", download: 78 }),
+  {
+    at: 0,
+  }
+); // to add at specifc index , we can use push method to add at the end
+
+console.log(songs_collection.at(0)); // to get model at specfic index
+
+let findTitle3 = songs_collection.findWhere({ title: "song3" });
+console.log("findTitle3-->", findTitle3);
+
+let filterd = songs_collection.filter((song) => {
+  return song.get("download") >= 70;
+});
+
+console.log(filterd);
+
+songs_collection.each((song) => console.log(song));
