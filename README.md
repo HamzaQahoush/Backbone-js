@@ -43,7 +43,7 @@ song.set({key : 'value})
   `song.remove()`
 
 - we can use **has('attr')** method to check of attributes
-  `song.has(''title)` // true
+  `song.has('title')` // true
 
 - we can set defaults attribute for a Model by adding :
 
