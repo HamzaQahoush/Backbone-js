@@ -147,3 +147,23 @@ let SongView = Backbone.View.extend({
 let view1 = new SongView();
 
 $("#container").html(view1.render().$el); // use jquery selector to get continaer el then we use html_method to insert view dom element inside the contianer
+
+// passing model to view :
+
+let Song$ = Backbone.Model.extend();
+
+let SongView$ = Backbone.View.extend({
+  tagName: "span",
+  className: "song",
+  render: function () {
+    this.$el.html(this.model.get("title"));
+    return this;
+  },
+});
+let song$ = new Song$({ title: "Hello by Adele" });
+
+// instance of view :
+view$ = new SongView$({ el: "#container1", model: song$ });
+view$.render();
+
+// passing a collection into view
