@@ -132,3 +132,18 @@ let filterd = songs_collection.filter((song) => {
 console.log(filterd);
 
 songs_collection.each((song) => console.log(song));
+
+// views :
+
+let SongView = Backbone.View.extend({
+  tagName: "span",
+  className: "song",
+  render: function () {
+    this.$el.html("Hello World");
+    return this;
+  },
+});
+
+let view1 = new SongView();
+
+$("#container").html(view1.render().$el); // use jquery selector to get continaer el then we use html_method to insert view dom element inside the contianer

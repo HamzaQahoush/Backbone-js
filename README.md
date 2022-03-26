@@ -203,3 +203,24 @@ songs_collection.each((song)=>console.log(song))
 ```
 
 ## views
+
+- Backbone view :it's object who responsible for rendering the content of view and responding for the events it's more like controller in MVC terms.
+
+- every view has a reference to DOM element.and responsible for rendering the content of this element.
+
+- when insering data in Dom , `div` will created by default , we can override it by specify `tagName='span'` , `className='song'`
+
+```
+let SongView = Backbone.View.extend({
+  render: function () {
+    this.$el.html("Hello World");
+    return this;
+  },
+});
+
+let view1 = new SongView();
+view1.render();
+$("#container").html(view1.$el);
+
+
+```
