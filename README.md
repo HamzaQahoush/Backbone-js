@@ -70,14 +70,14 @@ let song1 = new Song();
 
 ```
 
-- we can add an `idAttribute` when initilaze the model
+- we can add an `idAttribute` when initiliaze the model to set an attribute.
 
 ```
 let Vechicle = Backbone.Model.extend({
   idAttribute: "registrationNumber",
   validate: function (attrs) {
     if (!attrs.registrationNumber) {
-      return "You cant create a vechicle without registrationNumber";
+      return "You can't create a vechicle without registrationNumber";
     }
   },
 
@@ -88,7 +88,7 @@ let Vechicle = Backbone.Model.extend({
 
 ```
 
-- we can check by `song1.isValid()`
+- we can check by `song1.isValid()` isValid in ready function from Backbone js.
 - to check the error and get it `song1.ValidationError`
 
 ## Inheritance
@@ -102,7 +102,7 @@ let Animal = Backbone.Model.extend({
 
 let Dog = Animal.extend({
 walk: function () {
-    Animal.prototype.walk.apply(this);
+    Animal.prototype.walk.apply(this); // will call the method inside parant model.
     console.log("Dog is walking");
   },
 });
@@ -160,18 +160,29 @@ and pass the attr in the empty object
 - collections are set of models .
 
 ```
-let Song_model = Backbone.Model.extend();
+  let Song_model = Backbone.Model.extend();
 
-let Songs_collection = Backbone.Collection.extend({
-  model: Song_model,
-});
+  let Songs = Backbone.Collection.extend({
+    model: Song_model,
+  });
 
-//add model to collection:
+  /* we can add model to collection by
+  - create an instance of collection and add instance of model
+  as array OR by add method
+  */
 
-let songs_ = new Songs([
-  new Song_model({ title: "Song 1" }),
-  new Song_model({ title: "Song 2" }),
-]);
+  let songs_collection = new Songs([
+    new Song_model({ title: "Song 1", genre: "jazz", download: 90 }),
+    new Song_model({ title: "Song 2", genre: "pop", download: 45 }),
+  ]);
+
+  // To add new model to collection.
+  songs_collection.add(
+    new Song_model({ title: "song3", genre: "pop", download: 78 }),
+    {
+      at: 0,
+    }
+  );
 
 ```
 

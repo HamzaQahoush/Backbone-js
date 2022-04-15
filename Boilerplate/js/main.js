@@ -31,9 +31,11 @@ let Dog = Animal.extend({
     console.log("Dog is walking");
   },
 });
-
+console.log("---inhertance part---");
 dog1 = new Dog();
 dog1.walk();
+// animal is walking
+// Dog is walking
 
 // assignemnt 1
 let Vechicle = Backbone.Model.extend({
@@ -133,7 +135,7 @@ console.log(filterd);
 
 songs_collection.each((song) => console.log(song));
 
-// views :
+/// views :
 
 let SongView = Backbone.View.extend({
   tagName: "span",
@@ -149,7 +151,7 @@ let view1 = new SongView();
 $("#container").html(view1.render().$el); // use jquery selector to get continaer el then we use html_method to insert view dom element inside the contianer
 
 // passing model to view :
-
+/*
 let Song$ = Backbone.Model.extend();
 
 let SongView$ = Backbone.View.extend({
@@ -165,5 +167,38 @@ let song$ = new Song$({ title: "Hello by Adele" });
 // instance of view :
 view$ = new SongView$({ el: "#container1", model: song$ });
 view$.render();
+*/
 
 // passing a collection into view
+let SongView$ = Backbone.View.extend({
+  render: function () {
+    this.$el.html(this.model.get("title"));
+    return this;
+  },
+});
+let Song$ = Backbone.Model.extend();
+let Songs$Collection = Backbone.Collection.extend({
+  model: Song$,
+});
+let SongsView$ = Backbone.View.extend({
+  tagName: "span",
+  className: "song",
+  render: function () {
+    let self = this;
+    this.model.each((song) => {
+      let songView = new SongView$({ model: song });
+      self.$el.append(songView.render().$el);
+    });
+  },
+});
+
+// instance of model into collections:
+let song$collections = new Songs$Collection([
+  new Song$({ title: "Hello by Adele" }),
+  new Song$({ title: "See you again by Charli " }),
+  new Song$({ title: "Mother by Sami " }),
+]);
+
+// instance of view :
+view$ = new SongsView$({ el: "#container1", model: song$collections });
+view$.render();
